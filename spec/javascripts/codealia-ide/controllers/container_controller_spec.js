@@ -55,14 +55,14 @@ describe('ContainerController', function () {
         var editorSpy;
 
         beforeEach(function() {
-            $scope.editor = element.parent();
+            $scope.preview = element.parent();
             controller.setEditor($scope, element.parent());
             editorSpy = spyOn($scope.preview, 'html')
         });
 
         describe("without a preview", function () {
-            xit("should not copy html from preview", function () {
-                $scope.preview = undefined;
+            it("does not give the preview html to the editor", function () {
+                $scope.preview = undefined ;
                 $scope.updateEditor();
                 expect(editorSpy).not.toHaveBeenCalled();
 
@@ -70,12 +70,23 @@ describe('ContainerController', function () {
         });
 
         describe("without an editor", function () {
-            xit("should not throw an exception", function () {
+            it("does not give the editor a preview html", function () {
+                $scope.editor = undefined;
+                $scope.updateEditor();
+                expect(editorSpy).not.toHaveBeenCalled();
             });
         });
 
         describe("with a preview and editor defined", function () {
-            xit("should update the contents of the editor", function () {
+            it("should update the contents of the editor", function () {
+                    $scope.updateEditor();
+                    expect(editorSpy).toHaveBeenCalledWith($scope.editor.getValue())
+                });
+
+                it("sets the html in the editor from the preview", function () {
+                    editorSpy.and.callThrough();
+                    $scope.updateEditor();
+                    expect($scope.preview.html()).toEqual($scope.editor.getValue())
             });
         });
     });

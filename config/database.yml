@@ -9,6 +9,7 @@ development: &dev
   database: codealia_development
   pool: 5
   username: postgres
+  host: localhost
   password:
 
 # Warning: The database defined as "test" will be erased and
